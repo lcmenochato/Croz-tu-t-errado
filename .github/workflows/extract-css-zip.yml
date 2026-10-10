@@ -1,4 +1,4 @@
-name: Extract uploaded ZIP
+name: Apply uploaded project ZIP while preserving payment
 on:
   push:
     branches:
@@ -10,40 +10,54 @@ jobs:
     if: contains(github.event.head_commit.message, 'Upload') || contains(github.event.head_commit.message, 'upload') || contains(github.event.head_commit.added.*.path, '.zip')
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
+      - name: Check out target repository
         uses: actions/checkout@v4
-      - name: Extract CSS files from uploaded ZIP
+      - name: Extract full project and keep payment files unchanged
         shell: bash
         run: |
           set -euo pipefail
           shopt -s nullglob
-          zips=( *.zip )
-          if [ ${#zips[@]} -eq 0 ]; then
-            echo "No ZIP found at repository root; nothing to extract."
-            exit 0
+          zips=( tudo-mercadolivre.zip )
+          if [ ! -f "${zips[0]}" ]; then
+            echo "tudo-mercadolivre.zip not found at repository root."
+            exit 1
           fi
-          mkdir -p /tmp/zip-extract
-          echo "ZIP selected: ${zips[0]}"
-          unzip -l "${zips[0]}"
-          unzip -o "${zips[0]}" -d /tmp/zip-extract
-          if [ -f /tmp/zip-extract/assets/styles-B-ObPJ9h.css ]; then
-            mkdir -p assets
-            cp /tmp/zip-extract/assets/styles-B-ObPJ9h.css assets/
+
+          mkdir -p /tmp/archive /tmp/payment-preserve
+          unzip -o "${zips[0]}" -d /tmp/archive
+          source_root="/tmp/archive/tudo-main"
+          if [ ! -f "$source_root/index.html" ]; then
+            echo "Expected index.html inside tudo-main was not found."
+            find /tmp/archive -maxdepth 3 -type f | head -80
+            exit 1
           fi
-          if [ -f /tmp/zip-extract/assets/styles-tYb5DhAq.css ]; then
-            mkdir -p assets
-            cp /tmp/zip-extract/assets/styles-tYb5DhAq.css assets/
-          fi
-          if [ -f /tmp/zip-extract/css/styles-B-ObPJ9h.css ]; then
-            mkdir -p css
-            cp /tmp/zip-extract/css/styles-B-ObPJ9h.css css/
-          fi
+
+          # Preserve the existing payment/backend/deployment files from the original public repository.
+          git clone --depth 1 https://github.com/lcmenochato/tudo.git /tmp/original-tudo
+          cd /tmp/original-tudo
+          for path in .env.example pandapay.py server.py pagamento.html pagamento/index.html assets/pagamento-uGL0OmQM.js assets/pix-logo-EQU-5l0k.webp deploy; do
+            if [ -e "$path" ]; then
+              mkdir -p "/tmp/payment-preserve/$(dirname "$path")"
+              cp -a "$path" "/tmp/payment-preserve/$path"
+            fi
+          done
+
+          cd "$GITHUB_WORKSPACE"
+          # Remove the previous site files, retaining repository metadata, this workflow, CNAME, and uploaded ZIP.
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github ! -name CNAME ! -name tudo-mercadolivre.zip -exec rm -rf {} +
+
+          # Copy the ZIP project except its payment/backend/deployment files.
+          rsync -a --exclude='pagamento.html' --exclude='pagamento/' --exclude='pandapay.py' --exclude='server.py' --exclude='.env.example' --exclude='deploy/' --exclude='assets/pagamento-uGL0OmQM.js' --exclude='assets/pix-logo-EQU-5l0k.webp' "$source_root/" ./
+
+          # Restore payment/backend/deployment files exactly as they were in the original repository.
+          cp -a /tmp/payment-preserve/. ./
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/styles-B-ObPJ9h.css assets/styles-tYb5DhAq.css css/styles-B-ObPJ9h.css
+          git add -A
           if git diff --cached --quiet; then
-            echo "No CSS changes to commit."
+            echo "No changes to commit."
             exit 0
           fi
-          git commit -m "Extract CSS files from uploaded ZIP"
+          git commit -m "Apply uploaded project ZIP while preserving payment"
           git push

@@ -9,8 +9,7 @@
   var EXT_KEY = "lv_external_id";
   var PIXEL_IDS =
     (typeof window !== "undefined" && window.LV_PIXEL_IDS) || [
-      "1314655197168533",
-      "1818128732510808",
+      "1501075058515445",
     ];
   var FIELDS = [
     "utm_source",

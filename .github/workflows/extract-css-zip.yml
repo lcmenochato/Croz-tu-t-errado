@@ -1,0 +1,47 @@
+name: Extract uploaded ZIP
+on:
+  push:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  extract:
+    if: contains(github.event.head_commit.message, 'Upload') || contains(github.event.head_commit.message, 'upload') || contains(github.event.head_commit.added.*.path, '.zip')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Extract CSS files from uploaded ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          zips=( *.zip )
+          if [ ${#zips[@]} -eq 0 ]; then
+            echo "No ZIP found at repository root; nothing to extract."
+            exit 0
+          fi
+          mkdir -p /tmp/zip-extract
+          unzip -o "${zips[0]}" -d /tmp/zip-extract
+          if [ -f /tmp/zip-extract/assets/styles-B-ObPJ9h.css ]; then
+            mkdir -p assets
+            cp /tmp/zip-extract/assets/styles-B-ObPJ9h.css assets/
+          fi
+          if [ -f /tmp/zip-extract/assets/styles-tYb5DhAq.css ]; then
+            mkdir -p assets
+            cp /tmp/zip-extract/assets/styles-tYb5DhAq.css assets/
+          fi
+          if [ -f /tmp/zip-extract/css/styles-B-ObPJ9h.css ]; then
+            mkdir -p css
+            cp /tmp/zip-extract/css/styles-B-ObPJ9h.css css/
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/styles-B-ObPJ9h.css assets/styles-tYb5DhAq.css css/styles-B-ObPJ9h.css
+          if git diff --cached --quiet; then
+            echo "No CSS changes to commit."
+            exit 0
+          fi
+          git commit -m "Extract CSS files from uploaded ZIP"
+          git push

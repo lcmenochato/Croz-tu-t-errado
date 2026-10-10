@@ -23,6 +23,8 @@ jobs:
             exit 0
           fi
           mkdir -p /tmp/zip-extract
+          echo "ZIP selected: ${zips[0]}"
+          unzip -l "${zips[0]}"
           unzip -o "${zips[0]}" -d /tmp/zip-extract
           if [ -f /tmp/zip-extract/assets/styles-B-ObPJ9h.css ]; then
             mkdir -p assets

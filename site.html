@@ -88,6 +88,7 @@ fbq('track','PageView');
   }
   cta.addEventListener('click',function(){
     if(!sel)return;
+    try{if(typeof window.fbq==='function'){window.fbq('trackSingle','1501075058515445','InitiateCheckout');}}catch(e){}
     try{localStorage.setItem('corSelecionada',sel);localStorage.setItem('corImagem',selImg||'');}catch(e){}
     cta.disabled=true; cta.textContent='Redirecionando...'; cta.style.opacity='.85';
     setTimeout(go,60);

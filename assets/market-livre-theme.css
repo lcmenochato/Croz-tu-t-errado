@@ -1,0 +1,232 @@
+/* Tema visual de demonstração inspirado nas cores do Mercado Livre */
+:root {
+  --market-yellow: #ffe600;
+  --market-blue: #3483fa;
+  --market-blue-dark: #2968c8;
+  --market-blue-pale: #eef4ff;
+  --market-ink: #333333;
+  --primary: #3483fa !important;
+  --ring: #3483fa !important;
+}
+html, body { color: var(--market-ink); }
+header, .top, .site-header, .header, [data-market-header] {
+  background-color: var(--market-yellow) !important;
+  border-color: var(--market-yellow) !important;
+  color: var(--market-ink) !important;
+}
+/* Logo de referência maior, preservando a proporção. */
+img.logo, .logo {
+  width: 180px !important;
+  max-width: 70vw !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+/* Remapeia tons rosa/vermelho de destaque para o azul do Mercado Livre. */
+[class*="bg-rose-500"], [class*="bg-rose-600"], [class*="bg-pink-500"],
+[class*="bg-pink-600"], [class*="bg-red-500"], [class*="bg-red-600"],
+[class*="bg-rose-400"], [class*="bg-pink-400"] {
+  background-color: var(--market-blue) !important;
+}
+[class*="text-rose-500"], [class*="text-rose-600"], [class*="text-pink-500"],
+[class*="text-pink-600"], [class*="text-red-500"], [class*="text-red-600"] {
+  color: var(--market-blue) !important;
+}
+[class*="border-rose-"], [class*="border-pink-"], [class*="border-red-"] {
+  border-color: var(--market-blue) !important;
+}
+button, .btn, .cta, .buy, .accept, .btn-primary, .tt-btn, #lv-copy-pix,
+a[role="button"] { --tw-bg-opacity: 1; }
+button[class*="bg-rose-"], button[class*="bg-pink-"], button[class*="bg-red-"],
+a[class*="bg-rose-"], a[class*="bg-pink-"], a[class*="bg-red-"],
+.btn-primary, .cta, .buy, .accept, .tt-btn, #lv-copy-pix {
+  background: var(--market-blue) !important;
+  color: #ffffff !important;
+  border-color: var(--market-blue) !important;
+}
+button[class*="bg-rose-"]:hover, button[class*="bg-pink-"]:hover,
+button[class*="bg-red-"]:hover, .btn-primary:hover, .cta:hover, .buy:hover {
+  background: var(--market-blue-dark) !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--market-blue) !important;
+  outline-color: var(--market-blue) !important;
+}
+.price, .new-price, .offer-price, [class*="text-rose-"], [class*="text-pink-"] {
+  color: var(--market-blue) !important;
+}
+
+
+/* Correção global: impedir que estilos antigos reduzam a logo de demonstração. */
+img[src*="mercado-livre-logo.svg"] {
+  display: block !important;
+  width: 280px !important;
+  height: 70px !important;
+  max-width: 70vw !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  flex: 0 0 auto !important;
+}
+.top img[src*="mercado-livre-logo.svg"],
+.brandrow img[src*="mercado-livre-logo.svg"] {
+  width: 280px !important;
+  height: 70px !important;
+  max-width: 70vw !important;
+}
+@media (max-width: 480px) {
+  img[src*="mercado-livre-logo.svg"] {
+    width: 220px !important;
+    height: 56px !important;
+    max-width: 64vw !important;
+  }
+}
+
+
+/* Botões rosas da página do produto: azul Mercado Livre. */
+:root {
+  --pann-primary: #3483fa !important;
+  --pann-accent-fg: #3483fa !important;
+}
+a[class*="bg-[color:var(--pann-primary)]"],
+button[style*="background:#eef4ff"],
+button[style*="background: #eef4ff"] {
+  background-color: #3483fa !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  border-color: #3483fa !important;
+}
+section.p-3 button[style*="#eef4ff"] {
+  background: #eef4ff !important;
+  color: #3483fa !important;
+  border-color: #3483fa !important;
+}
+
+
+/* Botões de ação rosa: azul Mercado Livre, sem mudar layout ou conteúdo. */
+:root {
+  --pann-primary: #3483fa !important;
+  --pann-primary-hover: #2968c8 !important;
+  --primary-color: #3483fa !important;
+  --button-primary: #3483fa !important;
+}
+button[style*="#3483fa"], button[style*="#2968c8"],
+button[style*="#3483fa"], button[style*="#3483fa"],
+button[style*="#2968c8"], button[style*="255, 75, 92"],
+a[role="button"][style*="#3483fa"], a[role="button"][style*="#2968c8"],
+a[role="button"][style*="#3483fa"], a[role="button"][style*="#3483fa"],
+a[role="button"][style*="#2968c8"],
+button[class*="bg-pink-"], button[class*="bg-rose-"], button[class*="bg-red-"],
+a[class*="bg-pink-"], a[class*="bg-rose-"], a[class*="bg-red-"] {
+  background: #3483fa !important;
+  background-color: #3483fa !important;
+  border-color: #3483fa !important;
+  color: #ffffff !important;
+}
+button[style*="#3483fa"]:hover, button[style*="#2968c8"]:hover,
+button[style*="#3483fa"]:hover, button[style*="#3483fa"]:hover,
+button[style*="#2968c8"]:hover {
+  background: #2968c8 !important;
+  background-color: #2968c8 !important;
+}
+
+
+/* Correção específica dos botões visíveis na página de produto (site.html). */
+nav a[class*="bg-\\[color:var(--pann-primary)\\]"],
+nav a[class*="pann-primary"],
+a[class*="bg-\\[color:var(--pann-primary)\\]"],
+button[style*="background:#eef4ff"] {
+  background-color: #3483fa !important;
+  background-image: none !important;
+  border-color: #3483fa !important;
+  color: #ffffff !important;
+}
+button[style*="background:#eef4ff"] {
+  background: #eef4ff !important;
+  color: #3483fa !important;
+}
+
+
+/* Ajuste final: sobrescreve cores rosa/vermelho dos botões e seus estados hover.
+   Mantém textos, funções, dimensões e layout existentes. */
+:root {
+  --button-blue: #3483fa;
+  --button-blue-hover: #2968c8;
+}
+button,
+a[role="button"],
+[role="button"],
+.btn,
+.btn-primary,
+button[class*="bg-pink-"],
+button[class*="bg-rose-"],
+button[class*="bg-red-"],
+a[class*="bg-pink-"],
+a[class*="bg-rose-"],
+a[class*="bg-red-"] {
+  --tw-bg-opacity: 1;
+}
+button[style*="#eef4ff"],
+button[style*="#3483fa"],
+button[style*="#2968c8"],
+button[style*="#3483fa"],
+button[style*="#3483fa"],
+button[style*="#2968c8"],
+button[style*="255, 75, 92"],
+button[class*="bg-pink-"],
+button[class*="bg-rose-"],
+button[class*="bg-red-"],
+a[role="button"][style*="#3483fa"],
+a[role="button"][style*="#2968c8"],
+a[role="button"][style*="#3483fa"],
+a[role="button"][style*="#3483fa"],
+a[role="button"][style*="#2968c8"],
+a[class*="bg-pink-"],
+a[class*="bg-rose-"],
+a[class*="bg-red-"],
+.btn-primary,
+.cta,
+.buy,
+.accept,
+.tt-btn,
+#lv-copy-pix {
+  background: var(--button-blue) !important;
+  background-color: var(--button-blue) !important;
+  background-image: none !important;
+  border-color: var(--button-blue) !important;
+  color: #fff !important;
+}
+button[style*="#eef4ff"]:hover,
+button[style*="#3483fa"]:hover,
+button[style*="#2968c8"]:hover,
+button[style*="#3483fa"]:hover,
+button[style*="#3483fa"]:hover,
+button[style*="#2968c8"]:hover,
+button[style*="255, 75, 92"]:hover,
+button[class*="bg-pink-"]:hover,
+button[class*="bg-rose-"]:hover,
+button[class*="bg-red-"]:hover,
+a[role="button"][style*="#3483fa"]:hover,
+a[role="button"][style*="#2968c8"]:hover,
+a[role="button"][style*="#3483fa"]:hover,
+a[role="button"][style*="#3483fa"]:hover,
+a[role="button"][style*="#2968c8"]:hover,
+a[class*="bg-pink-"]:hover,
+a[class*="bg-rose-"]:hover,
+a[class*="bg-red-"]:hover,
+.btn-primary:hover,
+.cta:hover,
+.buy:hover,
+.accept:hover,
+.tt-btn:hover,
+#lv-copy-pix:hover {
+  background: var(--button-blue-hover) !important;
+  background-color: var(--button-blue-hover) !important;
+  border-color: var(--button-blue-hover) !important;
+}
+
+/* Faixa de cima amarela (Mercado Livre), resto do fundo branco */
+header, header.sticky {
+  background-color: var(--market-yellow) !important;
+  backdrop-filter: none !important;
+  border-bottom-color: #e6cf00 !important;
+}
+body { background: #ffffff; }

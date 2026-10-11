@@ -88,10 +88,10 @@ fbq('track','PageView');
   }
   cta.addEventListener('click',function(){
     if(!sel)return;
-    try{if(typeof window.fbq==='function'){window.fbq('trackSingle','1501075058515445','InitiateCheckout');}}catch(e){}
+    try{var px=(window.parent&&window.parent!==window&&typeof window.parent.fbq==='function')?window.parent.fbq:window.fbq;if(typeof px==='function'){px('trackSingle','1501075058515445','InitiateCheckout');}}catch(e){}
     try{localStorage.setItem('corSelecionada',sel);localStorage.setItem('corImagem',selImg||'');}catch(e){}
     cta.disabled=true; cta.textContent='Redirecionando...'; cta.style.opacity='.85';
-    setTimeout(go,60);
+    setTimeout(go,450);
   });
   document.addEventListener('click',function(e){
     var a=e.target.closest && e.target.closest('a[href="/pagamento"], a[href="/pagamento.html"]');
